@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  {
   "type": "module",
   "dependencies": {
     "@solana/web3.js": "^3.2.1",
