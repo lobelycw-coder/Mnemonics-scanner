@@ -1,0 +1,6 @@
+node_modules/
+data/
+hits.txt
+scanned.txt
+scanned_solana.txt
+.env
