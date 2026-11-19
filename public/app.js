@@ -52,9 +52,16 @@ function setState(state) {
   $('toggle').dataset.mode = state === 'running' ? 'stop' : 'go';
 }
 
-async function api(path, method = 'POST') {
-  const r = await fetch(path, { method, headers: { authorization: `Bearer ${TOKEN}` } });
+async function api(path, method = 'POST', body) {
+  const r = await fetch(path, {
+    method,
+    headers: { authorization: `Bearer ${TOKEN}`, 'content-type': 'application/json' },
+    body: body ? JSON.stringify(body) : undefined,
+  });
   return r.ok ? r.json() : null;
+}
+
+$('toggle').onclick = async () => {
 }
 
 $('toggle').onclick = async () => {
