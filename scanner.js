@@ -1,3 +1,11 @@
+import { engine } from './core/engine.js';
+
+engine.on('scan', (e) => console.log(e.verified ? `${e.n} ${e.address} ${e.balance ?? '-'}` : `${e.address} unverified`));
+engine.on('hit', (e) => console.log(`HIT ${e.address} ${e.balance} ETH\n${e.mnemonic}`));
+
+process.on('SIGINT', () => { engine.stop(); setTimeout(() => process.exit(0), 300); });
+engine.start();
+
 const bip39 = require('bip39');
 const { ethers } = require('ethers');
 const fs = require('fs');
