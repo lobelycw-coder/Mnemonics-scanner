@@ -7,7 +7,11 @@ const app = Fastify({ logger: true });
 await app.register(websocket);
 await app.register(fastifyStatic, { root: join(__dirname, '../public') });
 
+const port = Number(process.env.PORT ?? 3000);
+const host = process.env.HOST ?? '0.0.0.0';
+await app.listen({ port, host });
 const clients = new Set();
+
 app.get('/ws', { websocket: true }, (socket) => {
   clients.add(socket);
   socket.on('close', () => clients.delete(socket));
