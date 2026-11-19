@@ -62,3 +62,15 @@ export const store = {
   clearHits: () => q.clearHits.run(),
   db,
 };
+
+db.exec(`CREATE TABLE IF NOT EXISTS push_subs (
+  endpoint TEXT PRIMARY KEY, keys TEXT NOT NULL, created_at INTEGER NOT NULL);`);
+
+const sq = {
+  save: db.prepare('INSERT OR REPLACE INTO push_subs VALUES (?, ?, ?)'),
+  del:  db.prepare('DELETE FROM push_subs WHERE endpoint = ?'),
+  all:  db.prepare('SELECT * FROM push_subs'),
+};
+store.saveSub = (e, k) => sq.save.run(e, k, Date.now());
+store.removeSub = (e) => sq.del.run(e);
+store.subs = () => sq.all.all();
